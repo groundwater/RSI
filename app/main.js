@@ -35,6 +35,22 @@ app.on('ready', function() {
   })
 })
 
+const {Menu, MenuItem, Tray} = require('electron')
+
+let tray = null
+app.on('ready', () => {
+
+  tray = new Tray(`${__dirname}/../build/app.ico`)
+  const contextMenu = new Menu
+
+  let item = new MenuItem({
+    role: 'quit',
+  })
+
+  contextMenu.append(item)
+  tray.setContextMenu(contextMenu)
+})
+
 function windowNotify() {
   browser.show()
 }
