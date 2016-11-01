@@ -12,7 +12,7 @@
   "scripts": {
     "pack": "build --dir",
     "dist": "build",
-    "release": "build --publish always",
+    "release": "build --publish onTagOrDraft",
     "postinstall": "install-app-deps",
     "start": "electron app"
   },
@@ -28,14 +28,16 @@
   },
   "build": {
     "appId": "groundwater.github.io",
-    "win": {},
+    "win": {
+    },
     "squirrelWindows": {
+      "iconUrl": "https://raw.githubusercontent.com/groundwater/RSI/master/build/icon.ico",
       "msi": true
     },
     "dmg": {},
     "mac": {
       "category": "public.app-category.healthcare-fitness",
-      "target": "dmg"
+      "target": ["default"]
     }
   },
   "homepage": "https://github.com/groundwater/RSI#readme"
