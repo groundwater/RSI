@@ -1,6 +1,6 @@
 {
   "name": "RSI",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "App that watches your activity and tells you to take breaks",
   "main": "main.js",
   "scripts": {
