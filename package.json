@@ -9,9 +9,11 @@
     "electron-builder": "^7.15.2",
     "electron": "^1.4.4"
   },
+  "private": true,
   "scripts": {
     "pack": "build --dir",
     "dist": "build",
+    "release": "build --publish always",
     "postinstall": "install-app-deps",
     "start": "electron app"
   },
@@ -27,7 +29,17 @@
   },
   "build": {
     "appId": "groundwater.github.io",
-    "win": {}
+    "win": {},
+    "squirrelWindows": {
+      "msi": true
+    },
+    "dmg": {
+
+    },
+    "mac": {
+      "category": "public.app-category.healthcare-fitness",
+      "target": "dmg"
+    }
   },
   "homepage": "https://github.com/groundwater/RSI#readme"
 }
