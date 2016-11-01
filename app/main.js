@@ -47,6 +47,28 @@ function secondsToMS(s) {
   return s * 1000
 }
 
+function MSToSeconds(ms) {
+  return ms / 1000
+}
+
+function MSToMinutes(m) {
+  return MSToSeconds(m) / 60
+}
+
+function MSToHuman(ms) {
+  let lessThanAMinute = ms < secondsToMS(60)
+  var fmt = "unknown"
+  if (lessThanAMinute) {
+    let secs = Math.floor(MSToSeconds(ms))
+    fmt = `${secs}s`
+  } else {
+    let mins = Math.floor(MSToMinutes(ms))
+    let secs = Math.floor(MSToSeconds(ms)) % 60
+    fmt = `${mins}m ${secs}s`
+  }
+  return fmt
+}
+
 const stores = [{
   workTime: 0,
   maxTime: minutesToMS(20),
@@ -110,5 +132,5 @@ function processStore(store, {idleTime}) {
 
   store.lastCheck = now
 
-  console.log(store.workTime)
+  console.log('Next Break: ', MSToHuman(store.maxTime - store.workTime))
 }
