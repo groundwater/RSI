@@ -2,7 +2,7 @@
   "name": "RSI",
   "version": "1.0.0",
   "description": "App that watches your activity and tells you to take breaks",
-  "main": "main.js",
+  "main": "app/main.js",
   "dependencies": {
   },
   "devDependencies": {
@@ -12,7 +12,8 @@
   "scripts": {
     "pack": "build --dir",
     "dist": "build",
-    "postinstall": "install-app-deps"
+    "postinstall": "install-app-deps",
+    "start": "electron app"
   },
   "repository": {
     "type": "git",
