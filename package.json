@@ -1,0 +1,24 @@
+{
+  "name": "RSI",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/groundwater/RSI.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/groundwater/RSI/issues"
+  },
+  "homepage": "https://github.com/groundwater/RSI#readme",
+  "dependencies": {
+    "electron-windows-notifications": "^1.0.1",
+    "os-idle-timer": "^1.0.7"
+  }
+}
