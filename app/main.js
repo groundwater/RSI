@@ -40,7 +40,7 @@ const {Menu, MenuItem, Tray} = require('electron')
 let tray = null
 app.on('ready', () => {
 
-  tray = new Tray(`${__dirname}/../build/app.ico`)
+  tray = new Tray(`${__dirname}/app.ico`)
   const contextMenu = new Menu
 
   let item = new MenuItem({
