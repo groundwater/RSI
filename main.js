@@ -1,4 +1,4 @@
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 
 var binary = require('node-pre-gyp');
 var path = require('path');
@@ -20,6 +20,25 @@ function notify(msg) {
 }
 /* END */
 
+var browser
+app.on('ready', function() {
+  console.log('app ready')
+  browser = new BrowserWindow({
+    fullscreen: true,
+    alwaysOnTop: true,
+    show: false,
+  })
+  browser.loadURL(`file:///${__dirname}/index.html`)
+
+  ipcMain.on('close', () => {
+    browser.hide()
+  })
+})
+
+function windowNotify() {
+  browser.show()
+}
+
 function minutesToMS(m) {
   return m * secondsToMS(60)
 }
@@ -28,17 +47,34 @@ function secondsToMS(s) {
   return s * 1000
 }
 
-const store = {
+const stores = [{
+  workTime: 0,
+  maxTime: minutesToMS(20),
+  idleTime: 0,
+  maxIdle: minutesToMS(10),
+  lastCheck: Date.now(),
+  notify: () => {
+    windowNotify()
+  }
+}, {
   workTime: 0,
   maxTime: minutesToMS(5),
   idleTime: 0,
-  maxIdle: minutesToMS(1),
-  lastCheck: Date.now()
-}
+  maxIdle: secondsToMS(30),
+  lastCheck: Date.now(),
+  notify: () => {
+    notify("Short Break")
+  }
+}]
 
 setInterval(function(){
   let idleTime = idle.getIdleTime_ms()
+  for (let store of stores) {
+    processStore(store, {idleTime})
+  }
+}, 1000)
 
+function processStore(store, {idleTime}) {
   // count as idle if inactive for 10 seconds or more
   let now = Date.now()
   let last = store.lastCheck
@@ -55,7 +91,7 @@ setInterval(function(){
 
     if (userNeedsABreak) {
       console.log('Take a Break')
-      notify("Take a Break")
+      store.notify()
       store.workTime = 0
     }
   } else {
@@ -75,4 +111,4 @@ setInterval(function(){
   store.lastCheck = now
 
   console.log(store.workTime)
-}, 1000)
+}

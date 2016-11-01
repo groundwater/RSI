@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<script>
+const {ipcRenderer} = require('electron')
+function closeButton() {
+  ipcRenderer.send('close')
+}
+</script>
+<h1>Take a long Break</h1>
+<button onClick="closeButton()">Hide</button>
