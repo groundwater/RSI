@@ -2,8 +2,31 @@
 <script>
 const {ipcRenderer} = require('electron')
 function closeButton() {
-  ipcRenderer.send('close')
+  // ipcRenderer.send('close')
+  window.close()
 }
 </script>
-<h1>Take a long Break</h1>
-<button onClick="closeButton()">Hide</button>
+<h1>Take a Break</h1>
+<p id="timeout"></p>
+<button disabled id="hide" onClick="closeButton()">Hide</button>
+<script>
+var rest = parseInt(location.hash.substr(1)) || 60
+var start = Date.now()
+var hideBtn = document.querySelector('#hide')
+var pTag = document.querySelector('#timeout')
+
+setTimeout(function() {
+  hideBtn.disabled = false
+}, 5000)
+
+setInterval(function() {
+  var now = Date.now()
+  var dur = now - start
+  var remain = rest - Math.floor(dur/1000)
+  pTag.textContent = remain
+
+  if (remain <= 0) {
+    closeButton()
+  }
+}, 1000)
+</script>

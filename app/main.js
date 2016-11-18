@@ -20,20 +20,27 @@ function notify(msg) {
 }
 /* END */
 
-var browser
+var activeBrowser = null
 app.on('ready', function() {
   console.log('app ready')
-  browser = new BrowserWindow({
+})
+
+app.on('window-all-closed', () => {
+  // prevent close when browser window closes
+})
+
+
+function newBrowser(t) {
+  let browser = new BrowserWindow({
     fullscreen: true,
     alwaysOnTop: true,
-    show: false,
+    show: true,
   })
-  browser.loadURL(`file:///${__dirname}/index.html`)
-
-  ipcMain.on('close', () => {
-    browser.hide()
+  browser.loadURL(`file:///${__dirname}/index.html#${t}`)
+  browser.on('close', (event) => {
+    browser.close()
   })
-})
+}
 
 const {Menu, MenuItem, Tray} = require('electron')
 
@@ -51,8 +58,9 @@ app.on('ready', () => {
   tray.setContextMenu(contextMenu)
 })
 
-function windowNotify() {
-  browser.show()
+function windowNotify(t) {
+  // browser.show()
+  newBrowser(t)
 }
 
 function minutesToMS(m) {
@@ -92,16 +100,22 @@ const stores = [{
   maxIdle: minutesToMS(10),
   lastCheck: Date.now(),
   notify: () => {
-    windowNotify()
+    notify("Long Break Coming Up")
+    setTimeout(function() {
+      windowNotify(600)
+    }, 3000)
   }
 }, {
   workTime: 0,
   maxTime: minutesToMS(5),
   idleTime: 0,
-  maxIdle: secondsToMS(30),
+  maxIdle: secondsToMS(60),
   lastCheck: Date.now(),
   notify: () => {
-    notify("Short Break")
+    notify("Short Break Coming Up")
+    setTimeout(function() {
+      windowNotify(15)
+    }, 3000)
   }
 }]
 
@@ -127,7 +141,7 @@ function processStore(store, {idleTime}) {
 
     let userNeedsABreak = store.workTime > store.maxTime
 
-    if (userNeedsABreak) {
+    if (userNeedsABreak && activeBrowser === null) {
       console.log('Take a Break')
       store.notify()
       store.workTime = 0
