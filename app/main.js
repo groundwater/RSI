@@ -42,12 +42,10 @@ function newBrowser(t) {
   })
 }
 
-const {Menu, MenuItem, Tray} = require('electron')
+const {Menu, MenuItem} = require('electron')
 
-let tray = null
 app.on('ready', () => {
 
-  tray = new Tray(`${__dirname}/app.ico`)
   const contextMenu = new Menu
 
   let item = new MenuItem({
@@ -55,7 +53,6 @@ app.on('ready', () => {
   })
 
   contextMenu.append(item)
-  tray.setContextMenu(contextMenu)
 })
 
 function windowNotify(t) {
