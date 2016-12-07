@@ -5,18 +5,32 @@ var path = require('path');
 var binding_path = binary.find(path.resolve(path.join(__dirname, 'node_modules/os-idle-timer/package.json')));
 var idle = require(binding_path);
 
-/* Windows notification */
-const appId = 'electron-windows-notifications'
-const {ToastNotification} = require('electron-windows-notifications')
+function macNotify(msg) {
+  
+}
 
-function notify(msg) {
-  let notification = new ToastNotification({
-      appId: appId,
-      template: `<toast><visual><binding template="ToastText01"><text id="1">%s</text></binding></visual></toast>`,
-      strings: [msg]
+function winNotify(msg) {
+  const tn = require('electron-windows-notifications')
+  const ToastNotification = tn.ToastNotification
+
+  const notification = new ToastNotification({
+    appId: appId,
+    template: `<toast><visual><binding template="ToastText01"><text id="1">%s</text></binding></visual></toast>`,
+    strings: [msg]
   })
   notification.on('activated', () => console.log('Activated!'))
   notification.show()
+}
+
+/* Windows notification */
+const appId = 'electron-windows-notifications'
+function notify(msg) {
+  // if windows machine or mac machine
+  if (process.platform === 'win32') {
+    winNotify(msg);
+  } else if (process.platform === 'darwin') {
+    console.log(msg)
+  }
 }
 /* END */
 
