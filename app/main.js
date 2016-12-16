@@ -6,7 +6,7 @@ var binding_path = binary.find(path.resolve(path.join(__dirname, 'node_modules/o
 var idle = require(binding_path);
 
 function macNotify(msg) {
-  
+
 }
 
 function winNotify(msg) {
@@ -44,16 +44,13 @@ app.on('window-all-closed', () => {
 })
 
 
-function newBrowser(t) {
+function newBrowser(t) {  // makes screen pop up
   let browser = new BrowserWindow({
     fullscreen: true,
     alwaysOnTop: true,
     show: true,
   })
-  browser.loadURL(`file:///${__dirname}/index.html#${t}`)
-  browser.on('close', (event) => {
-    browser.close()
-  })
+  browser.loadURL(`file:///${__dirname}/index.html#${t}`) // load html file, with hash
 }
 
 const {Menu, MenuItem} = require('electron')
@@ -105,28 +102,28 @@ function MSToHuman(ms) {
 }
 
 const stores = [{
-  workTime: 0,
-  maxTime: minutesToMS(20),
-  idleTime: 0,
-  maxIdle: minutesToMS(10),
-  lastCheck: Date.now(),
-  notify: () => {
-    notify("Long Break Coming Up")
-    setTimeout(function() {
-      windowNotify(600)
-    }, 3000)
-  }
-}, {
-  workTime: 0,
-  maxTime: minutesToMS(5),
-  idleTime: 0,
-  maxIdle: secondsToMS(60),
+//   workTime: 0,
+//   maxTime: minutesToMS(1),
+//   idleTime: 0,
+//   maxIdle: minutesToMS(10),
+//   lastCheck: Date.now(),
+//   notify: () => {
+//     notify("Long Break Coming Up")
+//     setTimeout(function() {
+//       windowNotify(600)
+//     }, 3000)
+//   }
+// }, {
+  workTime: 0,  /* program keeps track of this, keeps changing the longer you work */
+  maxTime: 10000,  /* break when workTime = maxTime: how long should I work before enforcing break, 10 seconds */
+  idleTime: 0,  /* not using keyboard or mouse */
+  maxIdle: secondsToMS(60),  /* when idleTime = maxIdle, resets workTime */
   lastCheck: Date.now(),
   notify: () => {
     notify("Short Break Coming Up")
     setTimeout(function() {
-      windowNotify(15)
-    }, 3000)
+      windowNotify(5)  // should be shorter than maxTime, 5 seconds
+    }, 3000)  // wait 3 seconds to run windowNotify
   }
 }]
 

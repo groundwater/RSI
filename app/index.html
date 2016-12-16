@@ -1,32 +1,55 @@
 <!DOCTYPE html>
+
+<head>
+
 <script>
-const {ipcRenderer} = require('electron')
 function closeButton() {
-  // ipcRenderer.send('close')
   window.close()
 }
 </script>
-<h1>Take a Break</h1>
-<p id="timeout"></p>
-<button disabled id="hide" onClick="closeButton()">Hide</button>
+
+<!-- Insert this line above script imports  -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- font -->
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+<link rel="stylesheet" href="../static/style.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- Insert this line after script imports -->
+<script>if (window.module) module = window.module;</script>
+
+</head>
+<body>
+  <h1>Take a Break</h1>
+  Time remaining: <p id="timeout"></p>
+  <img src="../static/handstretch1.gif"><br>
+  <img src="http://68.media.tumblr.com/05c1020ce0cadebff9a9d98987968137/tumblr_n1ojqoOTqC1refy2yo3_500.gif"><br><br>
+  <button disabled id="hide" onClick="closeButton()" class="btn btn-warning">Hide this screen, I don't want to take a break!</button>
+</body>
+
 <script>
-var rest = parseInt(location.hash.substr(1)) || 60
+var rest = parseInt(location.hash.substr(1)) || 60 // reads argument in main.js—t--number of seconds break
 var start = Date.now()
-var hideBtn = document.querySelector('#hide')
-var pTag = document.querySelector('#timeout')
+var hideBtn = $('#hide')
+var pTag = $('#timeout')
+
 
 setTimeout(function() {
   hideBtn.disabled = false
-}, 5000)
+}, 5000) // enables after 5 seconds
 
 setInterval(function() {
-  var now = Date.now()
+  var now = Date.now() // time calculations
   var dur = now - start
   var remain = rest - Math.floor(dur/1000)
-  pTag.textContent = remain
+  $('#timeout').text(remain)
 
-  if (remain <= 0) {
-    closeButton()
-  }
-}, 1000)
+  // if (remain <= 0) {
+  //   closeButton()
+  // }  // commented so that it doesn't close automatically
+}, 1000)  // runs every second
 </script>

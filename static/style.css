@@ -1,0 +1,15 @@
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  text-align: center;
+  background-color: #000;
+  font-color: #FFF;
+}
+
+h1, p {
+  font-color: #FFF;
+}
+
+img {
+  margin: auto;
+  width: 30%;
+}
