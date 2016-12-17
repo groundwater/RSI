@@ -22,34 +22,68 @@ function closeButton() {
 <!-- Insert this line after script imports -->
 <script>if (window.module) module = window.module;</script>
 
+<!-- chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+
 </head>
 <body>
   <h1>Take a Break</h1>
-  Time remaining: <p id="timeout"></p>
+  <p>Time remaining: <span id="timeout"></span></p>
   <img src="../static/handstretch1.gif"><br>
   <img src="http://68.media.tumblr.com/05c1020ce0cadebff9a9d98987968137/tumblr_n1ojqoOTqC1refy2yo3_500.gif"><br><br>
+  <div id="sizeTimeChart"><canvas id="timeChart" width="200" height:"200"></canvas><br></div>
   <button disabled id="hide" onClick="closeButton()" class="btn btn-warning">Hide this screen, I don't want to take a break!</button>
 </body>
 
 <script>
+// Chart
+var ctx = $("#timeChart")
+var timeChart = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: [
+        'Active',
+        'Idle'
+      ],
+      datasets: [
+        {
+          data: [9, 3],
+          backgroundColor: [
+            "#FF6384",
+            "#36A2EB"
+          ],
+          hoverBackgroundColor: [
+            "#FF6384",
+            "#36A2EB"
+          ]
+        }]
+      },
+      options: {
+        responsive: true
+      }
+    })
+
+// setup for other elements
 var rest = parseInt(location.hash.substr(1)) || 60 // reads argument in main.js—t--number of seconds break
 var start = Date.now()
 var hideBtn = $('#hide')
 var pTag = $('#timeout')
 
-
+// enables button after 5 seconds
 setTimeout(function() {
   hideBtn.disabled = false
-}, 5000) // enables after 5 seconds
+}, 5000)
 
+// countdown
 setInterval(function() {
   var now = Date.now() // time calculations
   var dur = now - start
   var remain = rest - Math.floor(dur/1000)
   $('#timeout').text(remain)
 
-  // if (remain <= 0) {
-  //   closeButton()
-  // }  // commented so that it doesn't close automatically
+  if (remain <= 0) {
+    closeButton()
+  }
 }, 1000)  // runs every second
+
 </script>

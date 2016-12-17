@@ -11,5 +11,11 @@ h1, p {
 
 img {
   margin: auto;
-  width: 30%;
+  width: 25%;
+}
+
+#sizeTimeChart {
+  width: 25%;
+  height: 25%;
+  margin: auto;
 }

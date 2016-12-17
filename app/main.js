@@ -45,6 +45,10 @@ app.on('window-all-closed', () => {
 
 
 function newBrowser(t) {  // makes screen pop up
+  var browserOpen
+  if (browserOpen == true) {
+    return;
+  }
   let browser = new BrowserWindow({
     fullscreen: true,
     alwaysOnTop: true,
