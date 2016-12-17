@@ -14,8 +14,6 @@ img {
   width: 25%;
 }
 
-#sizeTimeChart {
-  width: 25%;
-  height: 25%;
-  margin: auto;
+table {
+  margin: 0 10% 0 10%;
 }

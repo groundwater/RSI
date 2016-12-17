@@ -29,9 +29,16 @@ function closeButton() {
 <body>
   <h1>Take a Break</h1>
   <p>Time remaining: <span id="timeout"></span></p>
-  <img src="../static/handstretch1.gif"><br>
-  <img src="http://68.media.tumblr.com/05c1020ce0cadebff9a9d98987968137/tumblr_n1ojqoOTqC1refy2yo3_500.gif"><br><br>
-  <div id="sizeTimeChart"><canvas id="timeChart" width="200" height:"200"></canvas><br></div>
+  <table>
+    <tr>
+      <td>
+        <img src="../static/handstretch1.gif">
+      </td>
+      <td>
+        <canvas id="timeChart" width="200" height:"200"></canvas>
+      </td>
+    </tr>
+  </table>
   <button disabled id="hide" onClick="closeButton()" class="btn btn-warning">Hide this screen, I don't want to take a break!</button>
 </body>
 
