@@ -10,6 +10,7 @@ function macNotify(msg) {
 }
 
 function winNotify(msg) {
+
   const tn = require('electron-windows-notifications')
   const ToastNotification = tn.ToastNotification
 
@@ -45,6 +46,7 @@ app.on('window-all-closed', () => {
 
 
 function newBrowser(t) {  // makes screen pop up
+
   var browserOpen
   if (browserOpen == true) {
     return;
@@ -105,11 +107,17 @@ function MSToHuman(ms) {
 }
 
 const stores = [{
+
   // 15 minute break every 100 minutes
+  // workTime: program keeps track of this, keeps changing the longer you work
+  // maxTime: break when workTime = maxTime: how long should I work before enforcing break
+  // idleTime: not using keyboard or mouse
+  // maxIdle: when idleTime = maxIdle, resets workTime
+
   workTime: 0,
-  maxTime: minutesToMS(100),
+  maxTime: minutesToMS(20),
   idleTime: 0,
-  maxIdle: minutesToMS(3),
+  maxIdle: minutesToMS(10),
   lastCheck: Date.now(),
   notify: () => {
     notify("Long Break Coming Up")
@@ -118,21 +126,24 @@ const stores = [{
     }, 3000)
   }
 }, {
+
   // 5 minute break every 25 minutes
-  workTime: 0,  /* program keeps track of this, keeps changing the longer you work */
-  maxTime: minutesToMS(25),  /* break when workTime = maxTime: how long should I work before enforcing break */
-  idleTime: 0,  /* not using keyboard or mouse */
-  maxIdle: secondsToMS(30),  /* when idleTime = maxIdle, resets workTime */
+
+  workTime: 0,
+  maxTime: minutesToMS(25),
+  idleTime: 0,
+  maxIdle: secondsToMS(60),
   lastCheck: Date.now(),
   notify: () => {
     notify("Short Break Coming Up")
     setTimeout(function() {
-      windowNotify(5)  // should be shorter than maxTime, 5 seconds
-    }, secondsToMS(3))  // wait 3 seconds to run windowNotify
+      windowNotify(15)  // should be shorter than maxTime
+    }, 3000)  // number of milliseconds to wait to run windowNotify
   }
 }]
 
 setInterval(function(){
+
   let idleTime = idle.getIdleTime_ms()
   for (let store of stores) {
     processStore(store, {idleTime})
@@ -140,14 +151,15 @@ setInterval(function(){
 }, 1000)
 
 function processStore(store, {idleTime}) {
+
   // count as idle if inactive for 10 seconds or more
+
   let now = Date.now()
   let last = store.lastCheck
 
   let userIsActive = idleTime < 10000
 
   if (userIsActive) {
-    // user is not idle
 
     store.workTime += (now - last)
     store.idleTime = 0
@@ -160,6 +172,7 @@ function processStore(store, {idleTime}) {
       store.workTime = 0
     }
   } else {
+
     // user is idle
 
     store.idleTime += (now - last)
