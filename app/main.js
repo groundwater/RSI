@@ -109,7 +109,7 @@ const stores = [{
   workTime: 0,
   maxTime: minutesToMS(100),
   idleTime: 0,
-  maxIdle: minutesToMS(15),
+  maxIdle: minutesToMS(3),
   lastCheck: Date.now(),
   notify: () => {
     notify("Long Break Coming Up")
@@ -122,7 +122,7 @@ const stores = [{
   workTime: 0,  /* program keeps track of this, keeps changing the longer you work */
   maxTime: minutesToMS(25),  /* break when workTime = maxTime: how long should I work before enforcing break */
   idleTime: 0,  /* not using keyboard or mouse */
-  maxIdle: secondsToMS(60),  /* when idleTime = maxIdle, resets workTime */
+  maxIdle: secondsToMS(30),  /* when idleTime = maxIdle, resets workTime */
   lastCheck: Date.now(),
   notify: () => {
     notify("Short Break Coming Up")
