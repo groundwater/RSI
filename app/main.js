@@ -71,7 +71,6 @@ app.on('ready', () => {
 })
 
 function windowNotify(t) {
-  // browser.show()
   newBrowser(t)
 }
 
@@ -106,10 +105,11 @@ function MSToHuman(ms) {
 }
 
 const stores = [{
+  // 15 minute break every 100 minutes
   workTime: 0,
-  maxTime: minutesToMS(1),
+  maxTime: minutesToMS(100),
   idleTime: 0,
-  maxIdle: minutesToMS(10),
+  maxIdle: minutesToMS(15),
   lastCheck: Date.now(),
   notify: () => {
     notify("Long Break Coming Up")
@@ -118,8 +118,9 @@ const stores = [{
     }, 3000)
   }
 }, {
+  // 5 minute break every 25 minutes
   workTime: 0,  /* program keeps track of this, keeps changing the longer you work */
-  maxTime: 10000,  /* break when workTime = maxTime: how long should I work before enforcing break, 10 seconds */
+  maxTime: minutesToMS(25),  /* break when workTime = maxTime: how long should I work before enforcing break */
   idleTime: 0,  /* not using keyboard or mouse */
   maxIdle: secondsToMS(60),  /* when idleTime = maxIdle, resets workTime */
   lastCheck: Date.now(),
@@ -127,7 +128,7 @@ const stores = [{
     notify("Short Break Coming Up")
     setTimeout(function() {
       windowNotify(5)  // should be shorter than maxTime, 5 seconds
-    }, 3000)  // wait 3 seconds to run windowNotify
+    }, secondsToMS(3))  // wait 3 seconds to run windowNotify
   }
 }]
 
