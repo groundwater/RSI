@@ -8,20 +8,13 @@ function closeButton() {
 }
 </script>
 
-<!-- Insert this line above script imports  -->
-<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <!-- font -->
 <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
 <link rel="stylesheet" href="../static/style.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!-- Insert this line after script imports -->
-<script>if (window.module) module = window.module;</script>
-
 <!-- chart.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
 
@@ -44,7 +37,7 @@ function closeButton() {
 
 <script>
 // Chart
-var ctx = $("#timeChart")
+var ctx = document.querySelector('#timeChart')
 var timeChart = new Chart(ctx, {
     type: 'doughnut',
     data: {
@@ -73,8 +66,8 @@ var timeChart = new Chart(ctx, {
 // setup for other elements
 var rest = parseInt(location.hash.substr(1)) || 60 // reads argument in main.js—t--number of seconds break
 var start = Date.now()
-var hideBtn = $('#hide')
-var pTag = $('#timeout')
+var hideBtn = document.querySelector('#hide')
+var pTag = document.querySelector('#timeout')
 
 // enables button after 5 seconds
 setTimeout(function() {
@@ -86,7 +79,7 @@ setInterval(function() {
   var now = Date.now() // time calculations
   var dur = now - start
   var remain = rest - Math.floor(dur/1000)
-  $('#timeout').text(remain)
+  pTag.textContent = remain
 
   if (remain <= 0) {
     closeButton()
