@@ -47,7 +47,7 @@ app.on('window-all-closed', () => {
 
 function newBrowser(t) {  // makes screen pop up
 
-  var browserOpen
+  let browserOpen
   if (browserOpen == true) {
     return;
   }
@@ -142,7 +142,7 @@ const stores = [{
   }
 }]
 
-setInterval(function(){
+setInterval(function() {
 
   let idleTime = idle.getIdleTime_ms()
   for (let store of stores) {

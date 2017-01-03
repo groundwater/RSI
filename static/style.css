@@ -1,8 +1,6 @@
 body {
   font-family: 'Nunito Sans', sans-serif;
   text-align: center;
-  background-color: #000;
-  font-color: #FFF;
 }
 
 h1, p {
@@ -11,7 +9,12 @@ h1, p {
 
 img {
   margin: auto;
-  width: 25%;
+  width: 250px;
+}
+
+#chart {
+  margin: auto;
+  width: 75%;
 }
 
 table {
