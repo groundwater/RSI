@@ -1,0 +1,22 @@
+body {
+  font-family: 'Nunito Sans', sans-serif;
+  text-align: center;
+}
+
+h1, p {
+  font-color: #FFF;
+}
+
+img {
+  margin: auto;
+  width: 250px;
+}
+
+#chart {
+  margin: auto;
+  width: 75%;
+}
+
+table {
+  margin: 0 10% 0 10%;
+}

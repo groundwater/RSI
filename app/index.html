@@ -1,32 +1,79 @@
 <!DOCTYPE html>
+
+<head>
+
 <script>
-const {ipcRenderer} = require('electron')
 function closeButton() {
-  // ipcRenderer.send('close')
   window.close()
 }
 </script>
-<h1>Take a Break</h1>
-<p id="timeout"></p>
-<button disabled id="hide" onClick="closeButton()">Hide</button>
-<script>
-var rest = parseInt(location.hash.substr(1)) || 60
-var start = Date.now()
-var hideBtn = document.querySelector('#hide')
-var pTag = document.querySelector('#timeout')
 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- font -->
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+<!-- css file -->
+<link rel="stylesheet" href="../static/style.css">
+<!-- chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+
+</head>
+<body>
+  <h1>Take a Break</h1>
+  <p>Time remaining: <span id="timeout"></span></p>
+  <img src="../static/handstretch1.gif">
+  <div id="chart">
+    <canvas id="timeChart"></canvas>
+  </div>
+  <button disabled id="hide" onClick="closeButton()" class="btn btn-warning">Hide this screen, I don't want to take a break!</button>
+</body>
+
+<script>
+// Chart
+
+
+let ctx = document.querySelector('#timeChart').getContext('2d')
+let timeChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+    datasets: [{
+      label: 'Work Time',
+      data: [12, 19, 3, 17, 6, 3, 7],
+      backgroundColor: "rgba(153,255,51,0.4)"
+    }, {
+      label: 'Rest Time',
+      data: [2, 29, 5, 5, 2, 3, 10],
+      backgroundColor: "rgba(255,153,0,0.4)"
+    }, {
+      label: 'Idle Time',
+      data: [6, 5, 10, 10, 20, 5, 3],
+      backgroundColor: "rgba(0,0,0,0.3)"
+    }]
+  }
+})
+
+// setup for other elements
+let rest = parseInt(location.hash.substr(1)) || 60 // reads argument in main.js—t--number of seconds break
+let start = Date.now()
+let hideBtn = document.querySelector('#hide')
+let pTag = document.querySelector('#timeout')
+
+// enables button after 5 seconds
 setTimeout(function() {
   hideBtn.disabled = false
 }, 5000)
 
+// countdown
 setInterval(function() {
-  var now = Date.now()
-  var dur = now - start
-  var remain = rest - Math.floor(dur/1000)
+  let now = Date.now() // time calculations
+  let dur = now - start
+  let remain = rest - Math.floor(dur/1000)
   pTag.textContent = remain
 
   if (remain <= 0) {
     closeButton()
   }
-}, 1000)
+}, 1000)  // runs every second
+
 </script>

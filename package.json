@@ -3,7 +3,9 @@
   "version": "1.0.1",
   "description": "App that watches your activity and tells you to take breaks",
   "main": "app/main.js",
-  "dependencies": {},
+  "dependencies": {
+    "chart.js": "^2.4.0"
+  },
   "devDependencies": {
     "electron-builder": "^7.15.2",
     "electron": "^1.4.4"
@@ -28,8 +30,7 @@
   },
   "build": {
     "appId": "groundwater.github.io",
-    "win": {
-    },
+    "win": {},
     "squirrelWindows": {
       "iconUrl": "https://raw.githubusercontent.com/groundwater/RSI/master/build/icon.ico",
       "msi": true
@@ -37,7 +38,9 @@
     "dmg": {},
     "mac": {
       "category": "public.app-category.healthcare-fitness",
-      "target": ["default"]
+      "target": [
+        "default"
+      ]
     }
   },
   "homepage": "https://github.com/groundwater/RSI#readme"
