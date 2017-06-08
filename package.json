@@ -1,44 +1,62 @@
 {
-  "name": "RSI",
-  "version": "1.0.1",
-  "description": "App that watches your activity and tells you to take breaks",
-  "main": "app/main.js",
-  "dependencies": {},
-  "devDependencies": {
-    "electron-builder": "^7.15.2",
-    "electron": "^1.4.4"
-  },
-  "private": true,
-  "scripts": {
-    "pack": "build --dir",
-    "dist": "build",
-    "release": "build --publish onTagOrDraft",
-    "postinstall": "install-app-deps",
-    "start": "electron app"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/groundwater/RSI.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/groundwater/RSI/issues"
-  },
-  "build": {
-    "appId": "groundwater.github.io",
-    "win": {
+    "name": "rsi",
+    "productName": "rsi",
+    "version": "1.0.0",
+    "description": "My Electron application description",
+    "main": "src/index.js",
+    "scripts": {
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make",
+        "lint": "eslint src"
     },
-    "squirrelWindows": {
-      "iconUrl": "https://raw.githubusercontent.com/groundwater/RSI/master/build/icon.ico",
-      "msi": true
+    "keywords": [],
+    "author": "groundwater",
+    "license": "MIT",
+    "config": {
+        "forge": {
+            "make_targets": {
+                "win32": [
+                    "squirrel"
+                ],
+                "darwin": [
+                    "zip"
+                ],
+                "linux": [
+                    "deb",
+                    "rpm"
+                ]
+            },
+            "electronPackagerConfig": {},
+            "electronWinstallerConfig": {
+                "name": "rsi"
+            },
+            "electronInstallerDebian": {},
+            "electronInstallerRedhat": {},
+            "github_repository": {
+                "owner": "",
+                "name": ""
+            },
+            "windowsStoreConfig": {
+                "packageName": "",
+                "name": "rsi"
+            }
+        }
     },
-    "dmg": {},
-    "mac": {
-      "category": "public.app-category.healthcare-fitness",
-      "target": ["default"]
+    "dependencies": {
+        "electron-compile": "^6.4.1",
+        "electron-windows-notifications": "^1.1.13",
+        "os-idle-timer": "^1.0.7"
+    },
+    "devDependencies": {
+        "babel-plugin-transform-async-to-generator": "^6.24.1",
+        "babel-preset-env": "^1.5.2",
+        "babel-preset-react": "^6.24.1",
+        "electron-prebuilt-compile": "1.6.11",
+        "eslint": "^3.19.0",
+        "eslint-config-airbnb": "^15.0.1",
+        "eslint-plugin-import": "^2.3.0",
+        "eslint-plugin-jsx-a11y": "^5.0.3",
+        "eslint-plugin-react": "^7.0.1"
     }
-  },
-  "homepage": "https://github.com/groundwater/RSI#readme"
 }

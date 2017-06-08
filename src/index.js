@@ -1,8 +1,8 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 
-var binary = require('node-pre-gyp');
+// var binary = require('node-pre-gyp');
 var path = require('path');
-var binding_path = binary.find(path.resolve(path.join(__dirname, 'node_modules/os-idle-timer/package.json')));
+var binding_path = 'os-idle-timer/build/Release/os-idle-timer.node';
 var idle = require(binding_path);
 
 /* Windows notification */
@@ -38,7 +38,7 @@ function newBrowser(t) {
   })
   browser.loadURL(`file:///${__dirname}/index.html#${t}`)
   browser.on('close', (event) => {
-    browser.close()
+    // browser.close()
   })
 }
 
