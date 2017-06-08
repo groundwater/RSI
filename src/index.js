@@ -5,18 +5,32 @@ var path = require('path');
 var binding_path = 'os-idle-timer/build/Release/os-idle-timer.node';
 var idle = require(binding_path);
 
-/* Windows notification */
-const appId = 'electron-windows-notifications'
-const {ToastNotification} = require('electron-windows-notifications')
+function macNotify(msg) {
+  
+}
 
-function notify(msg) {
-  let notification = new ToastNotification({
-      appId: appId,
-      template: `<toast><visual><binding template="ToastText01"><text id="1">%s</text></binding></visual></toast>`,
-      strings: [msg]
+function winNotify(msg) {
+  const tn = require('electron-windows-notifications')
+  const ToastNotification = tn.ToastNotification
+
+  const notification = new ToastNotification({
+    appId: appId,
+    template: `<toast><visual><binding template="ToastText01"><text id="1">%s</text></binding></visual></toast>`,
+    strings: [msg]
   })
   notification.on('activated', () => console.log('Activated!'))
   notification.show()
+}
+
+/* Windows notification */
+const appId = 'electron-windows-notifications'
+function notify(msg) {
+  // if windows machine or mac machine
+  if (process.platform === 'win32') {
+    winNotify(msg);
+  } else if (process.platform === 'darwin') {
+    console.log(msg)
+  }
 }
 /* END */
 
@@ -44,12 +58,10 @@ function newBrowser(t) {
   })
 }
 
-const {Menu, MenuItem, Tray} = require('electron')
+const {Menu, MenuItem} = require('electron')
 
-let tray = null
 app.on('ready', () => {
 
-  tray = new Tray(`${__dirname}/app.ico`)
   const contextMenu = new Menu
 
   let item = new MenuItem({
@@ -57,7 +69,6 @@ app.on('ready', () => {
   })
 
   contextMenu.append(item)
-  tray.setContextMenu(contextMenu)
 })
 
 function windowNotify(t) {
