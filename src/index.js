@@ -22,13 +22,15 @@ function notify(msg) {
 
 var activeBrowser = null
 app.on('ready', function() {
-  console.log('app ready')
+  let browser = new BrowserWindow({
+  })
+
+  browser.loadURL(`file:///${__dirname}/start.html`)
 })
 
 app.on('window-all-closed', () => {
   // prevent close when browser window closes
 })
-
 
 function newBrowser(t) {
   let browser = new BrowserWindow({
